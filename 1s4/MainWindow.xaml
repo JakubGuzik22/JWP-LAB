@@ -1,0 +1,31 @@
+﻿<Window x:Class="_1s4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_1s4"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Background="#FFFBCACA">
+    <Grid>
+        <TextBox x:Name="txtPromień" HorizontalAlignment="Left" Margin="79,64,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Background="#FFD5EABA"/>
+        <TextBox x:Name="txtWysokość" HorizontalAlignment="Left" Margin="79,125,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Background="#FFA6ADEC"/>
+        <Button x:Name="btnOblicz" Content="Oblicz" HorizontalAlignment="Left" Margin="79,202,0,0" VerticalAlignment="Top" Width="120" Background="#FFB87AC7" Click="btnOblicz_Click"/>
+        <Label x:Name="lblPierwsza" Content="0" HorizontalAlignment="Left" Margin="428,73,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.627,0.255" Background="#FFF14343" Width="278" Height="90"/>
+        <Label x:Name="lblPolePowierzchni" Content="0" HorizontalAlignment="Left" Margin="428,184,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.627,0.255" Background="#FFF14343" Width="278" Height="90"/>
+        <ComboBox x:Name="cbxRodzajBryły" HorizontalAlignment="Left" Margin="79,272,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="cbxRodzajBryły_SelectionChanged">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#FFF0F0F0"/>
+                    <GradientStop Color="#FFF7FF60" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+            <ComboBoxItem Content="Walec"/>
+            <ComboBoxItem Content="Stożek"/>
+            <ComboBoxItem Content="Kula"/>
+        </ComboBox>
+        <CheckBox x:Name="chkObliczanieObjętośći" Content="Obliczanie Objętości" HorizontalAlignment="Left" Margin="315,326,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkObliczaniePola" Content="Obliczanie Pola" HorizontalAlignment="Left" Margin="315,362,0,0" VerticalAlignment="Top" Width="128"/>
+        <Button x:Name="btnZamknij" Content="X" HorizontalAlignment="Left" Margin="731,10,0,0" VerticalAlignment="Top" Height="44" Width="49" Click="btnZamknij_Click"/>
+
+    </Grid>
+</Window>
