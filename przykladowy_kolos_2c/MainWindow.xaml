@@ -1,0 +1,10 @@
+﻿<Window x:Class="WpfApp3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="0,0,0,-6">
+        <TextBox x:Name="txtBok1" Width="200" Height="30" Margin="100,43,100,217"/>
+        <TextBox x:Name="txtBok2" Width="200" Height="30" Margin="100,102,100,158"/>
+        <TextBox x:Name="txtWynik" Width="200" Height="30" Margin="100,145,100,115" IsReadOnly="True"/>
+        <Button x:Name="btnOblicz" Content="Oblicz obwód" Width="100" Height="30" Margin="150,226,150,34" Click="btnOblicz_Click"/>
+    </Grid>
+</Window>
