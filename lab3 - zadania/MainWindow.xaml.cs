@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -39,12 +39,15 @@ namespace lab3_1
                 {
                     new PojazdMechaniczny("Rower", 2, 10, 15)
                 };
-                
+
                 Samochód[] pojazdy3 =
                 {
                     new Samochód("Rower", 2, 10, 10, 10, "BMW")
                 };
+
+                wyświetlPojazdy(pojazdy);
                 wyświetlPojazdy(pojazdy2);
+                wyświetlPojazdy(pojazdy3);
             }
             catch(ArgumentException ex) {
                 MessageBox.Show($"Błąd: {ex.Message}");
@@ -53,7 +56,7 @@ namespace lab3_1
 
         private void wyświetlPojazdy(IEnumerable<Pojazd> kolekcja)
         {
-            lbxPojazdy.Items.Clear();
+            //lbxPojazdy.Items.Clear();
             foreach(var pojazd in kolekcja)
             {
                 lbxPojazdy.Items.Add(pojazd);
