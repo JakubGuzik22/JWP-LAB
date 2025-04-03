@@ -65,7 +65,7 @@
 
         public override string ToString()
         {
-            return $"{Nazwa}: {LiczbaKół} kół, {Prędkość} km/h, LP: {Lp}/{liczbaPojazdów}";
+            return $"LP: {Lp}/{liczbaPojazdów}, {Nazwa}: {LiczbaKół} kół, {Prędkość} km/h";
         }
 
         public static int LiczbaPojazdów
