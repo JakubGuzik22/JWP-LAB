@@ -1,0 +1,14 @@
+﻿<Window x:Class="lab6___zadanie_B.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lab6___zadanie_B"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="btnPrzycisk1" Content="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="40" Width="41" Click="btnPrzycisk1_Click"/>
+        <ListBox x:Name="lbxWynik1" Margin="56,10,349,273" Background="#FF8E9FFB"/>
+
+    </Grid>
+</Window>
