@@ -82,9 +82,9 @@ namespace WpfApp1
         // Definicja struktury Pies
         public struct Pies
         {
-            public string Imie { get; set; }
-            public int Wiek { get; set; }
-            public string Rasa { get; set; }
+            public string imie;
+            public int wiek
+            public string rasa
         }
 
         // Lista psów
