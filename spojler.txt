@@ -1,0 +1,11 @@
+Grupa A
+
+Utwórz klasę Samochód (z właściwościami Marka, Model, RokProdukcji, Cena). Utwórz przykładową kolekcję (np. List<Samochód>) zawierającą kilka obiektów Samochód. Po naciśnięciu przycisku "Zapisz" na formatce, serializuj tę kolekcję do pliku JSON. Do zadania oprócz plików MainWindow... dołącz wygenerowany plik .json.
+
+Grupa B
+
+Utwórz plik tekstowy dane_temperatury.txt, w którym każda linia zawiera pojedynczą liczbę zmiennoprzecinkową reprezentującą pomiar temperatury. W aplikacji po naciśnięciu przycisku "Analizuj" wczytaj wszystkie liczby z pliku, oblicz ich średnią arytmetyczną i największą wartość, a następnie wyświetl te wyniki w kontrolkach (np. Label lub TextBox) na formatce. Do zadania oprócz plików MainWindow... dołącz plik dane_temperatury.txt.
+
+Grupa C
+
+Po naciśnięciu przycisku "Wczytaj Obraz" użytkownik wybiera w standardowym oknie dialogowym plik graficzny (np. z rozszerzeniem .bmp lub .png). W kontrolce ListBox zostają wyświetlone reprezentacje liczbowe pierwszych 16 bajtów nagłówka tego pliku.
