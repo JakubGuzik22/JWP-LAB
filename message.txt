@@ -1,0 +1,183 @@
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace WpfApp2
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+        public class Kula
+        {
+            public double promień;
+            public string materiał; 
+            public Kula(double promień, string materiał)
+            {
+                this.promień = promień;
+                this.materiał = materiał;
+            }
+            public double Masa()
+            {
+                double gęstość = 0;
+                
+                if (materiał == "Stal")
+                {
+                    gęstość = 7.85;
+                }
+                else if (materiał == "Drewno")
+                {
+                    gęstość = 0.8;
+                }
+
+                double objętość = (4.0 / 3.0) * Math.PI * Math.Pow(promień, 3);
+                return objętość * gęstość;
+            }
+            public void ZmieńPromień(Func<double, double> zmianaPromienia)
+            {
+                promień = zmianaPromienia(promień);
+            }
+        }
+
+        private void btnWyświetl_Click(object sender, RoutedEventArgs e)
+        {
+            var kula1 = new Kula(5, "Stal");
+            var kula2 = new Kula(10, "Drewno");
+            
+            kula1.ZmieńPromień(p => p + 2); 
+            kula2.ZmieńPromień(p => p * 1.5);
+
+            lbxWynik.Items.Clear();
+            lbxWynik.Items.Add($"Kula 1 (Materiał: {kula1.materiał}, Promień: {kula1.promień} cm) - Masa: {kula1.Masa():F2} g");
+            lbxWynik.Items.Add($"Kula 2 (Materiał: {kula2.materiał}, Promień: {kula2.promień} cm) - Masa: {kula2.Masa():F2} g");
+        }
+    }
+}
+
+
+
+
+
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+
+namespace WpfApp1
+{
+    public partial class MainWindow : Window
+    {
+        // Definicja struktury Pies
+        public struct Pies
+        {
+            public string Imie { get; set; }
+            public int Wiek { get; set; }
+            public string Rasa { get; set; }
+        }
+
+        // Lista psów
+        List<Pies> psy = new List<Pies>()
+        {
+            new Pies { Imie = "Reksio", Wiek = 5, Rasa = "Owczarek" },
+            new Pies { Imie = "Max", Wiek = 3, Rasa = "Owczarek" },
+            new Pies { Imie = "Bella", Wiek = 2, Rasa = "Labrador" },
+            new Pies { Imie = "Lucky", Wiek = 7, Rasa = "Labrador" },
+            new Pies { Imie = "Szarik", Wiek = 4, Rasa = "Husky" },
+            new Pies { Imie = "Rocky", Wiek = 6, Rasa = "Husky" }
+        };
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Clear();
+
+            var wynik = from pies in psy
+                        group pies by pies.Rasa into g
+                        select new
+                        {
+                            Rasa = g.Key,
+                            SredniWiek = g.Average(p => p.Wiek),
+                            MaksymalnyWiek = g.Max(p => p.Wiek)
+                        };
+
+            foreach (var r in wynik)
+            {
+                listBox.Items.Add($"Rasa: {r.Rasa} | Średni wiek: {r.SredniWiek:F2} | Maksymalny wiek: {r.MaksymalnyWiek}");
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    using System.Linq;
+using System.Windows;
+
+namespace TwojaAplikacja
+{
+    public partial class MainWindow : Window
+    {
+        // Definicja klasy Produkt
+        public class Produkt
+        {
+            public string Nazwa { get; set; }
+            public double Cena { get; set; }
+            public string Kategoria { get; set; }
+        }
+
+        // Tablica produktów
+        private Produkt[] produkty = new Produkt[]
+        {
+            new Produkt { Nazwa = "Mleko", Cena = 3.5, Kategoria = "Spożywcze" },
+            new Produkt { Nazwa = "Chleb", Cena = 2.0, Kategoria = "Spożywcze" },
+            new Produkt { Nazwa = "Telefon", Cena = 1500, Kategoria = "Elektronika" },
+            new Produkt { Nazwa = "Laptop", Cena = 4000, Kategoria = "Elektronika" },
+            new Produkt { Nazwa = "Kurtka", Cena = 300, Kategoria = "Odzież" },
+            new Produkt { Nazwa = "Spodnie", Cena = 200, Kategoria = "Odzież" }
+        };
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        // Obsługa przycisku
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            listBoxWyniki.Items.Clear();
+
+            var grupy = produkty
+                .GroupBy(p => p.Kategoria)
+                .Select(g => new
+                {
+                    Kategoria = g.Key,
+                    LiczbaProduktow = g.Count(),
+                    SredniaCena = g.Average(p => p.Cena)
+                });
+
+            foreach (var grupa in grupy)
+            {
+                listBoxWyniki.Items.Add($"Kategoria: {grupa.Kategoria} - Liczba: {grupa.LiczbaProduktow}, Średnia cena: {grupa.SredniaCena:F2} zł");
+            }
+        }
+    }
+}
+}
