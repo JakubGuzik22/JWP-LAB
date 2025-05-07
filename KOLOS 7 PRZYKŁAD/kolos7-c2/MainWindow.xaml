@@ -1,0 +1,11 @@
+﻿<Window x:Class="Kol7A.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Nagłówek Obrazu" Height="300" Width="300">
+    <Grid Margin="10">
+        <StackPanel>
+            <Button Content="Wczytaj Obraz" Click="WczytajObraz_Click" Width="120" Margin="0,0,0,10"/>
+            <ListBox Name="HeaderListBox" Height="200"/>
+        </StackPanel>
+    </Grid>
+</Window>

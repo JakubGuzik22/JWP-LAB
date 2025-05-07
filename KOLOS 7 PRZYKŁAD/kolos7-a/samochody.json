@@ -1,0 +1,20 @@
+[
+  {
+    "Marka": "Toyota",
+    "Model": "Corolla",
+    "RokProdukcji": "2018",
+    "Cena": 55000
+  },
+  {
+    "Marka": "Ford",
+    "Model": "Focus",
+    "RokProdukcji": "2017",
+    "Cena": 48000
+  },
+  {
+    "Marka": "BMW",
+    "Model": "X5",
+    "RokProdukcji": "2020",
+    "Cena": 135000
+  }
+]
