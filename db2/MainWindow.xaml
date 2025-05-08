@@ -8,7 +8,12 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <ListBox x:Name="lbxStudenci" Margin="54,23,330,194"/>
-        <Button x:Name="btnWczytaj" Content="Wczytaj" HorizontalAlignment="Left" Margin="544,154,0,0" VerticalAlignment="Top" Click="btnWczytaj_Click"/>
+        <Button x:Name="btnWczytaj" Content="Wczytaj" HorizontalAlignment="Left" Margin="71,264,0,0" VerticalAlignment="Top" Click="btnWczytaj_Click"/>
+        <Button x:Name="btnDodajStudenta" Content="Dodaj" HorizontalAlignment="Left" Margin="630,264,0,0" VerticalAlignment="Top" Click="btnDodajStudenta_Click"/>
+        <TextBox x:Name="txtImie" HorizontalAlignment="Left" Margin="571,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtNazwisko" HorizontalAlignment="Left" Margin="571,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtOcena" HorizontalAlignment="Left" Margin="571,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" UndoLimit="2"/>
+        <Label Content="Dodawanie studenta: imie nazwisko ocena" HorizontalAlignment="Left" Margin="543,5,0,0" VerticalAlignment="Top" Width="247"/>
 
     </Grid>
 </Window>

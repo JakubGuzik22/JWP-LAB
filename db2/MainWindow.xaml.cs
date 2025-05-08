@@ -31,5 +31,23 @@ namespace lab8a__EF
                 lbxStudenci.Items.Add(student);
             }
         }
+
+        private void btnDodajStudenta_Click(object sender, RoutedEventArgs e)
+        {
+            var db = new DBUczelniaJG();
+
+            var nowyStudent = new Student
+            {
+                Imie = txtImie.Text,
+                Nazwisko = txtNazwisko.Text,
+                Ocena = (double?)Convert.ToDecimal(txtOcena.Text),
+            };
+
+            db.Studenci.Add(nowyStudent);
+
+            db.SaveChanges();
+
+            MessageBox.Show("Dodano nowego studenta: "+nowyStudent);
+        }
     }
 }
