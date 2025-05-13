@@ -1,0 +1,34 @@
+Baza ręcznie:
+Widok -> SQL Server Object Explorer
+Dodanie bazy danych: Rozwinąć i ppm na "Databases" i wybrać "Add New Database"
+Dodanie Tabeli: Rozwinąć bazę, wybrać "Tables" i ppm wybrać "Add New Table"
+Pamiętać o zmianie [Table] w Kodzie SQL na nazwę tabeli np. [Testy] (LICZBA MNOGA!!!!)
+
+Baza Automat:
+ - NuGet: ppm na rozwiązanie.
+Wyszukujemy wszystko z Microsoft na początku oraz musi być ta sama wersja ale niższa niż .NET!!!! (Zalecana 8.0.15):
+ - EntityFrameworkCore
+ - EntityFrameworkCore.Design
+ - EntityFrameworkCore.SqlServer
+ - EntityFrameworkCore.Tools
+
+Dodatkowo zrobić Model po organizację można
+Dodajemy klasie którą chcemy dodać jako rekordy w bazie ADNOTACJE (Zawszę nad tym do czego ma się odwoływać!!!) w "[]"
+
+ - Klasa DbNazwa:
+ public class DbUczelnia:DbContext
+    {
+        public DbSet<Student> Studenci { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("URL_BAZY"); // Jest on w "properties" bazy danych nazwane jako "Connection string"
+        }
+    }
+
+ - Migracje:
+Widok -> Inne okna -> Konsola Menedżera pakietów
+Polecenie: "Add-Migration Nazwa"
+Następnie polecenie: "Update-Database"
+
+
