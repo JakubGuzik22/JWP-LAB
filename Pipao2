@@ -1,0 +1,202 @@
+#include <iostream>
+#include <string>
+#include <sstream> // Do łatwego budowania opisów
+
+using namespace std;
+
+// --- Klasa Bazowa 1 ---
+class Komputer {
+private:
+    string nazwa;
+    double cena;
+    string procesor;
+    double pamiec;
+
+public:
+    // Konstruktor do inicjalizacji pól
+    Komputer(string n, double c, string p, double pam)
+        : nazwa(n), cena(c), procesor(p), pamiec(pam) {}
+
+    // Wirtualny destruktor (dobra praktyka dla klas bazowych)
+    virtual ~Komputer() {}
+
+    // Metoda wirtualna, zgodnie z diagramem
+    virtual string OpiszKomputer() {
+        stringstream ss;
+        ss << "Komputer: " << nazwa << ", Cena: " << cena
+           << ", Procesor: " << procesor << ", Pamiec: " << pamiec << "GB";
+        return ss.str();
+    }
+
+    // Zwykła metoda
+    int ObliczSume(int a, int b) {
+        return a + b;
+    }
+};
+
+// --- Klasa Bazowa 2 ---
+class Wyswietlacz {
+private:
+    string nazwa;
+    double cena;
+    string obraz;
+    double ekran; // np. przekątna w calach
+
+public:
+    Wyswietlacz(string n, double c, string o, double e)
+        : nazwa(n), cena(c), obraz(o), ekran(e) {}
+
+    virtual ~Wyswietlacz() {}
+
+    // Metoda wirtualna, zgodnie z diagramem
+    virtual string OpiszWyswietlacz() {
+        stringstream ss;
+        ss << "Wyswietlacz: " << nazwa << ", Cena: " << cena
+           << ", Obraz: " << obraz << ", Ekran: " << ekran << " cali";
+        return ss.str();
+    }
+
+    void WyswietlLiczbe(int x) {
+        cout << "Wyswietlona liczba: " << x << endl;
+    }
+};
+
+// --- Klasy Pochodne ---
+
+// Serwer dziedziczy z Komputer
+class Serwer : public Komputer {
+private:
+    string magazyn;
+    string siec;
+
+public:
+    Serwer(string n, double c, string p, double pam, string m, string s)
+        : Komputer(n, c, p, pam), magazyn(m), siec(s) {}
+
+    // Nadpisanie metody wirtualnej (override to dobra praktyka w C++11 i nowszych)
+    string OpiszKomputer() override {
+        stringstream ss;
+        ss << Komputer::OpiszKomputer() // Wywołanie metody z klasy bazowej
+           << ", Magazyn: " << magazyn
+           << ", Siec: " << siec;
+        return ss.str();
+    }
+};
+
+// Monitor dziedziczy z Wyswietlacz
+class Monitor : public Wyswietlacz {
+private:
+    string podstawka;
+    string kabel;
+
+public:
+    Monitor(string n, double c, string o, double e, string p, string k)
+        : Wyswietlacz(n, c, o, e), podstawka(p), kabel(k) {}
+
+    string OpiszWyswietlacz() override {
+        stringstream ss;
+        ss << Wyswietlacz::OpiszWyswietlacz() // Wywołanie metody z klasy bazowej
+           << ", Podstawka: " << podstawka
+           << ", Kabel: " << kabel;
+        return ss.str();
+    }
+};
+
+// Tablet dziedziczy z OBU klas (dziedziczenie wielokrotne)
+class Tablet : public Komputer, public Wyswietlacz {
+private:
+    string dotyk;
+    string bateria;
+
+public:
+    Tablet(string n_k, double c_k, string p, double pam, // Pola dla Komputer
+           string n_w, double c_w, string o, double e, // Pola dla Wyswietlacz
+           string d, string b) // Pola dla Tablet
+        : Komputer(n_k, c_k, p, pam),
+          Wyswietlacz(n_w, c_w, o, e),
+          dotyk(d), bateria(b) {}
+
+    // Nadpisanie metod z OBU klas bazowych
+    string OpiszKomputer() override {
+        stringstream ss;
+        ss << Komputer::OpiszKomputer() // Wywołanie metody z Komputer
+           << " (Typ: Tablet)";
+        return ss.str();
+    }
+
+    string OpiszWyswietlacz() override {
+        stringstream ss;
+        ss << Wyswietlacz::OpiszWyswietlacz() // Wywołanie metody z Wyswietlacz
+           << " (Typ: Tablet)";
+        return ss.str();
+    }
+
+    // Nowa metoda dla Tablet
+    string OpiszCalosc() {
+        stringstream ss;
+        ss << "--- Pełny Opis Tabletu ---" << endl;
+        // Musimy jawnie wskazać, którą metodę bazową chcemy wywołać
+        ss << Komputer::OpiszKomputer() << endl;
+        ss << Wyswietlacz::OpiszWyswietlacz() << endl;
+        ss << "Specyfika: Dotyk: " << dotyk << ", Bateria: " << bateria;
+        return ss.str();
+    }
+
+    // Nowa metoda dla Tablet
+    void PokazSume(int a, int b) {
+        // Obie metody są dziedziczone:
+        int suma = ObliczSume(a, b); // z Komputer
+        WyswietlLiczbe(suma);        // z Wyswietlacz
+    }
+};
+
+// Pecet (Dziedziczenie + Kompozycja)
+// *** Założenie: Pecet dziedziczy z Komputer (patrz uwagi poniżej) ***
+class Pecet : public Komputer {
+private:
+    string grafika;
+    string wskaznik;
+    Monitor monitor; // Kompozycja: Pecet "posiada" Monitor
+
+public:
+    Pecet(string n_k, double c_k, string p, double pam, // Pola Komputer
+          string g, string w, // Pola Pecet
+          Monitor m) // Obiekt Monitor do kompozycji
+        : Komputer(n_k, c_k, p, pam),
+          grafika(g), wskaznik(w), monitor(m) {}
+
+    string OpiszKomputer() override {
+        stringstream ss;
+        ss << "--- Opis Peceta ---" << endl;
+        ss << Komputer::OpiszKomputer() << endl; // Metoda bazowa
+        ss << "Specyfika PC: Grafika: " << grafika << ", Wskaznik: " << wskaznik << endl;
+        // Użycie obiektu składowego (monitora)
+        ss << "Posiadany monitor: " << monitor.OpiszWyswietlacz();
+        return ss.str();
+    }
+};
+
+// --- Przykładowe użycie ---
+int main() {
+    cout << "--- SERWER ---" << endl;
+    Serwer s1("Dell PowerEdge", 15000, "Xeon", 128, "100TB RAID", "10Gbps");
+    cout << s1.OpiszKomputer() << endl;
+    cout << "Suma (Serwer): " << s1.ObliczSume(10, 20) << endl;
+
+    cout << "\n--- TABLET ---" << endl;
+    Tablet t1("iPad Pro", 5000, "M2", 16, // Dane komputera
+              "iPad Display", 0, "Liquid Retina", 12.9, // Dane wyświetlacza
+              "Pencil 2", "10h"); // Dane tabletu
+    cout << t1.OpiszCalosc() << endl;
+    cout << "\nSuma (Tablet): ";
+    t1.PokazSume(30, 40); // Używa metod z obu klas bazowych
+
+    cout << "\n--- PECET ---" << endl;
+    // Najpierw tworzymy monitor, który będzie częścią Peceta
+    Monitor m1("Dell Ultrasharp", 2000, "IPS", 27, "Ergo", "HDMI");
+    // Tworzymy Peceta, przekazując mu monitor
+    Pecet pc1("Domowy PC", 8000, "i9", 64, "RTX 4090", "Mysz", m1);
+    cout << pc1.OpiszKomputer() << endl;
+
+    return 0;
+}
