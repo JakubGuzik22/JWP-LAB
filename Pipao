@@ -1,0 +1,230 @@
+/*****************************/
+/* Dziedziczenie wielobazowe */
+/*****************************/
+
+#include <string>
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+/* ...uzupelnic kod programu... */
+
+// ========= POCZĄTEK KODU PROGRAMU =========
+
+/**
+ * @class Komputer
+ * @brief Klasa bazowa reprezentująca komputer.
+ */
+class Komputer
+{
+protected:
+    // Atrybuty komputera
+    string nazwa_k;
+    double cena_k;
+    string procesor;
+    double ram;
+
+public:
+    /**
+     * @brief Konstruktor z parametrami (i wartościami domyślnymi).
+     * [span_0](start_span)Służy również jako konstruktor bezargumentowy[span_0](end_span).
+     */
+    Komputer(string n = "PC", double c = 2000.0, string p = "CPU", double r = 1024.0)
+        : nazwa_k(n), cena_k(c), procesor(p), ram(r) {}
+
+    /**
+     * @brief Zwraca opis komputera jako string.
+     */
+    string OpiszKomputer()
+    {
+        stringstream ss;
+        ss << "Komputer: " << nazwa_k << " cena: " << cena_k
+           << " CPU: " << procesor << " RAM: " << ram;
+        return ss.str();
+    }
+
+    /**
+     * @brief Prosta operacja obliczeniowa.
+     */
+    int ObliczSume(int a, int b)
+    {
+        return a + b;
+    }
+};
+
+/**
+ * @class Wyswietlacz
+ * @brief Klasa bazowa reprezentująca wyświetlacz.
+ */
+class Wyswietlacz
+{
+protected:
+    // Atrybuty wyświetlacza
+    string nazwa_w;
+    double cena_w;
+    string parametry;
+    double przekatna;
+
+public:
+    /**
+     * @brief Konstruktor z parametrami (i wartościami domyślnymi).
+     * [span_1](start_span)Służy również jako konstruktor bezargumentowy[span_1](end_span).
+     */
+    Wyswietlacz(string n = "Monitor", double c = 500.0, string p = "LCD", double prz = 19.0)
+        : nazwa_w(n), cena_w(c), parametry(p), przekatna(prz) {}
+
+    /**
+     * @brief Zwraca opis wyświetlacza jako string.
+     */
+    string OpiszWyswietlacz()
+    {
+        stringstream ss;
+        ss << "Wyswietlacz: " << nazwa_w << " cena: " << cena_w
+           << " parametry: " << parametry << " cali: " << przekatna;
+        return ss.str();
+    }
+
+    /**
+     * @brief Wyświetla podaną liczbę na ekranie (konsoli).
+     */
+    void WyswietlLiczbe(int liczba)
+    {
+        cout << " --> " << liczba << " <--" << endl;
+    }
+};
+
+/**
+ * @class Serwer
+ * @brief Klasa pochodna, dziedziczy po Komputer.
+ */
+class Serwer : public Komputer
+{
+public:
+    /**
+     * [span_2](start_span)@brief Konstruktor bezargumentowy, inicjalizuje baze Komputer[span_2](end_span).
+     */
+    Serwer() : Komputer("Serwer IBM", 10000.0, "Xeon", 8192.0) {}
+};
+
+/**
+ * @class Monitor
+ * @brief Klasa pochodna, dziedziczy po Wyswietlacz.
+ */
+class Monitor : public Wyswietlacz
+{
+public:
+    /**
+     * [span_3](start_span)@brief Konstruktor bezargumentowy, inicjalizuje baze Wyswietlacz[span_3](end_span).
+     */
+    Monitor() : Wyswietlacz("Monitor HP", 700.0, "LED 1920x1080", 24.0) {}
+};
+
+/**
+ * @class Pecet
+ * @brief Klasa pochodna, dziedziczy po Komputer i zawiera obiekt Monitor (kompozycja).
+ */
+class Pecet : public Komputer
+{
+public:
+    /**
+     * @brief Obiekt klasy Monitor jako pole (kompozycja).
+     */
+    Monitor monitor;
+
+    /**
+     * [span_4](start_span)@brief Konstruktor bezargumentowy, inicjalizuje baze Komputer[span_4](end_span).
+     * Pole 'monitor' jest inicjalizowane swoim konstruktorem domyślnym.
+     */
+    Pecet() : Komputer("Pecet domowy", 3000.0, "Core i5", 4096.0) {}
+};
+
+/**
+ * @class Tablet
+ * [span_5](start_span)@brief Klasa demonstrująca dziedziczenie wielobazowe[span_5](end_span).
+ * Dziedziczy zarówno po Komputer, jak i Wyswietlacz.
+ */
+class Tablet : public Komputer, public Wyswietlacz
+{
+public:
+    /**
+     * [span_6](start_span)@brief Konstruktor bezargumentowy, inicjalizuje obie klasy bazowe[span_6](end_span).
+     */
+    Tablet() : Komputer("Tablet", 1500.0, "ARM", 2048.0),
+               Wyswietlacz("Ekran dotykowy", 0.0, "1280x800", 10.1) {}
+
+    /**
+     * @brief Tworzy zintegrowany opis tabletu, korzystając z pól obu klas bazowych.
+     */
+    string OpiszCalosc()
+    {
+        stringstream ss;
+        // Dostęp do pól chronionych z obu klas bazowych
+        ss << "Tablet: " << nazwa_k << " cena: " << cena_k
+           << " CPU: " << procesor << " RAM: " << ram
+           << " Ekran: " << parametry << " cali: " << przekatna;
+        return ss.str();
+    }
+
+    /**
+     * @brief Metoda łącząca funkcjonalność obu baz.
+     * Wykorzystuje ObliczSume() z Komputer i WyswietlLiczbe() z Wyswietlacz.
+     */
+    void PokazSume(int a, int b)
+    {
+        int suma = ObliczSume(a, b); // Metoda z Komputer
+        WyswietlLiczbe(suma);      // Metoda z Wyswietlacz
+    }
+};
+
+// ========= KONIEC KODU PROGRAMU =========
+
+
+int main()
+{         
+ Komputer X("Satellite", 3500.0, "Celeron CPU 1.80GHz", 512.0);
+ cout << "1) Test komputera X -->" << X.OpiszKomputer() << endl;
+
+ cout << endl;
+
+ Wyswietlacz Y("Belinea", 400.0, "LCD 1024 x 768 True Colors", 21.0);
+ cout << "2) Test wyswietlacza Y -->" << Y.OpiszWyswietlacz() << endl;
+
+ cout << endl;
+ {
+  Serwer S;
+  Monitor M;
+
+  cout << "3a) Test serwera -->" << S.OpiszKomputer() << endl;
+  cout << endl;
+  cout << "3b) Test monitora -->" << M.OpiszWyswietlacz() << endl;
+
+  cout << endl;
+  cout << "wynik obliczen sewera wyswietlony na monitorze: ";
+  M.WyswietlLiczbe( S.ObliczSume(12, 24) );
+ }
+
+ cout << endl;
+ {
+  Pecet P;
+
+  cout << "4) Test peceta -->" << P.OpiszKomputer() << endl;
+
+  cout << "wynik obliczen peceta wyswietlony na jego monitorze: ";
+  P.monitor.WyswietlLiczbe( P.ObliczSume(12, 24) );
+ }
+
+ cout << endl;
+ {
+  Tablet T;
+
+  cout << "5) Test tableta -->" << T.OpiszCalosc() << endl;
+
+  cout << "wynik obliczen wyswietlony na tablecie: ";
+  T.WyswietlLiczbe( T.ObliczSume(12, 24) );
+  cout << "wynik pokazany na tablecie: ";
+  T.PokazSume(12, 24);
+ }
+
+ cout << endl;
+ return 0;
+}
