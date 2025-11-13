@@ -200,3 +200,147 @@ int main() {
 
     return 0;
 }
+
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Komputer {
+private:
+    string nazwa;
+    double cena;
+    string procesor;
+    double pamiec;
+
+public:
+    Komputer(string n, double c, string p, double pam)
+        : nazwa(n), cena(c), procesor(p), pamiec(pam) {}
+
+    virtual ~Komputer() {}
+
+    virtual string OpiszKomputer() {
+        return "Komputer: " + nazwa + ", Cena: " + to_string(cena)
+               + ", Procesor: " + procesor + ", Pamiec: " + to_string(pamiec) + "GB";
+    }
+
+    int ObliczSume(int a, int b) {
+        return a + b;
+    }
+};
+
+class Wyswietlacz {
+private:
+    string nazwa;
+    double cena;
+    string obraz;
+    double ekran;
+
+public:
+    Wyswietlacz(string n, double c, string o, double e)
+        : nazwa(n), cena(c), obraz(o), ekran(e) {}
+
+    virtual ~Wyswietlacz() {}
+
+    virtual string OpiszWyswietlacz() {
+        return "Wyswietlacz: " + nazwa + ", Cena: " + to_string(cena)
+               + ", Obraz: " + obraz + ", Ekran: " + to_string(ekran) + " cali";
+    }
+
+    void WyswietlLiczbe(int x) {
+        cout << "Wyswietlona liczba: " << x << endl;
+    }
+};
+
+class Serwer : public Komputer {
+private:
+    string magazyn;
+    string siec;
+
+public:
+    Serwer(string n, double c, string p, double pam, string m, string s)
+        : Komputer(n, c, p, pam), magazyn(m), siec(s) {}
+
+    string OpiszKomputer() override {
+        return Komputer::OpiszKomputer() 
+               + ", Magazyn: " + magazyn
+               + ", Siec: " + siec;
+    }
+};
+
+class Monitor : public Wyswietlacz {
+private:
+    string podstawka;
+    string kabel;
+
+public:
+    Monitor(string n, double c, string o, double e, string p, string k)
+        : Wyswietlacz(n, c, o, e), podstawka(p), kabel(k) {}
+
+    string OpiszWyswietlacz() override {
+        return Wyswietlacz::OpiszWyswietlacz()
+               + ", Podstawka: " + podstawka
+               + ", Kabel: " + kabel;
+    }
+};
+
+class Tablet : public Komputer, public Wyswietlacz {
+private:
+    string dotyk;
+    string bateria;
+
+public:
+    Tablet(string n_k, double c_k, string p, double pam,
+           string n_w, double c_w, string o, double e,
+           string d, string b)
+        : Komputer(n_k, c_k, p, pam),
+          Wyswietlacz(n_w, c_w, o, e),
+          dotyk(d), bateria(b) {}
+
+    string OpiszKomputer() override {
+        return Komputer::OpiszKomputer() + " (Typ: Tablet)";
+    }
+
+    string OpiszWyswietlacz() override {
+        return Wyswietlacz::OpiszWyswietlacz() + " (Typ: Tablet)";
+    }
+
+    string OpiszCalosc() {
+        return "--- Pełny Opis Tabletu ---" + string("\n")
+               + Komputer::OpiszKomputer() + string("\n") 
+               + Wyswietlacz::OpiszWyswietlacz() + string("\n")
+               + "Specyfika: Dotyk: " + dotyk + ", Bateria: " + bateria;
+    }
+
+    void PokazSume(int a, int b) {
+        int suma = ObliczSume(a, b); 
+        WyswietlLiczbe(suma);
+    }
+};
+
+class Pecet : public Komputer {
+private:
+    string grafika;
+    string wskaznik;
+    Monitor monitor;
+
+public:
+    Pecet(string n_k, double c_k, string p, double pam,
+          string g, string w,
+          Monitor m)
+        : Komputer(n_k, c_k, p, pam),
+          grafika(g), wskaznik(w), monitor(m) {}
+
+    string OpiszKomputer() override {
+        return "--- Opis Peceta ---" + string("\n")
+               + Komputer::OpiszKomputer() + string("\n")
+               + "Specyfika PC: Grafika: " + grafika + ", Wskaznik: " + wskaznik + string("\n")
+               + "Posiadany monitor: " + monitor.OpiszWyswietlacz();
+    }
+};
+
+// 
+// Tutaj wklej swoją funkcję main() do testowania
+//
+
